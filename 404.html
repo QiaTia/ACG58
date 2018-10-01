@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link data-n-head="true" rel="icon" type="image/x-icon" href="//tia.nos-eastchina1.126.net/public/qiatia/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//tia.nos-eastchina1.126.net/public/qiatia/qiatia.css">
+<title>你访问的页面不在哟!</title>
+<style>
+	.nav-appbar{background-color:rgb(57,61,73)}
+	.nav-meun>li>a{color:#eee}
+	body{background-color:#eee;font-size:14px}
+	h4,h2{color:#ff4081;text-align:center;line-height:4rem;font-weight:normal}
+	.hr{min-width: 25rem; width: 50vw;border-bottom: solid rgb(57,61,73) 1px;margin:4px auto;}
+	.center{width: auto;margin: 0 auto;text-align: center;}
+	.time{color: #ff4081}
+</style>
+</head>
+
+<body>
+	<nav class="nav-appbar">
+		<div class="container">
+			<ul class="nav-meun">
+				<li><a class="title" href="../">QiaTia`小站</a></li>
+			</ul>
+		</div>
+	</nav>
+  <div class="container" style="padding-top: 22vh;overflow:hidden">
+  	<h2>404 ERRO!</h2>
+    <h4>哎呀，好像迷路了!</h4>
+    <h4>单击下面按钮返回首页或回到上一页</h4>
+    <div class="hr"></div>
+    <div class="center">
+    	<button class="btn" onclick="onBack()">返回上一级&nbsp;(<span class="time">5</span>)</button>
+    	<button class="btn" onclick="onIndex()">回到首页</button>
+    </div>
+    <div class="Copyright" style="width: 192px; margin: 24px auto;"> <span>Copyright © 2018 <a href="/">QiaTia</a></span></div>
+  </div>
+  <script type="text/javascript">
+  	function onBack(){
+  		window.location.href='javascript:history.back();';
+  		window.location.href='./';
+  	}
+  	function onIndex(){
+  		window.location.href='/';
+  	}
+  	(function() {
+  		var time = 5,
+  			timeVal = document.getElementsByClassName('time')[0],
+	  		timer = setInterval(function() {
+  			if (time == 0) {
+  				clearInterval(timer);
+  				onBack();
+  			} else {
+  				time--;
+  				timeVal.innerHTML = time;
+  			}
+  		}, 1000);
+  	})()
+  </script>
+</body>
+</html>
