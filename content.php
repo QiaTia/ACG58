@@ -7,7 +7,7 @@
 	<link href="https://lib.baomitu.com/mdui/0.4.1/css/mdui.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="./public/css/shaky.css">
 	<link rel="stylesheet" type="text/css" href="./public/css/public.css">
-    <link rel="stylesheet" href="//cdn.90so.net/layui/2.2.6/css/layui.css"  media="all">
+    <link rel="stylesheet" href="public/layui/css/layui.css"  media="all">
 	<style type="text/css">
 		.reply{ position: relative; }
         .reply > .reply_btn{ position: absolute; right: 0rem; bottom: 6px}
@@ -185,7 +185,7 @@
     <?php }?>
 	<script src="//libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="https://lib.baomitu.com/mdui/0.4.1/js/mdui.min.js"></script>
-    <script src="//cdn.90so.net/layui/2.2.6/layui.js " charset="utf-8"></script>
+    <script src="public/layui/layui.js " charset="utf-8"></script>
 	<script src="./public/js/public.js"></script>
     <script type="text/javascript">
         var conid = getQueryString('i'),
