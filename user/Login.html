@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>登陆--ACG58动漫社区</title>
+	<style type="text/css">
+		.Login{ width: 95%; max-width: 500px; margin: 0 auto; background-color: #FFF;border-radius: .5rem}
+		.title{ height: 55px;line-height: 55px; padding-left: 15px; font-weight: 800; }
+		.content{ width: 89%; padding: 5px 15px; }
+		.actions{ padding: 15px 5px}
+		.mdui-checkbox, .join{ float: left; }
+		.join{ line-height: 36px; }
+	</style>
+	<link href="https://lib.baomitu.com/mdui/0.4.1/css/mdui.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../public/css/public.css">
+</head>
+<body class="mdui-theme-primary-blue-grey">
+	<div class="container" style="margin-top: 10px;">
+<!-- 登陆区域 -->
+		<div class="Login">
+		    <div class="title mdui-shadow-1">
+		      <span class="mdui-typo-title">请输入账号密码:</span> 
+		    </div>
+		    <div class="content mdui-row-xs-2">
+		      <div class="mdui-textfield mdui-textfield-floating-label">
+		        <i class="mdui-icon material-icons">account_circle</i>
+		        <label class="mdui-textfield-label">用户名</label>
+		        <input name='name' class="mdui-textfield-input" type="text" required/>
+		        <div class="mdui-textfield-error">用户名不能为空</div>
+		      </div>
+		      <div class="mdui-textfield mdui-textfield-floating-label">
+		        <i class="mdui-icon material-icons">lock</i>
+		        <label class="mdui-textfield-label">密码</label>
+		        <input name='pw'  class="mdui-textfield-input" type="password" pattern="^.*(?=.{6,}).*$" required/>
+		        <div class="mdui-textfield-error">密码至少 6 位</div>
+		      </div>
+		      <label class="mdui-col-offset-xs-1 mdui-checkbox">
+		        <input name="cookie" type="checkbox" id="cookie" value="is"/>
+		        <i class="mdui-checkbox-icon"></i>下次自动登陆？
+		      </label><div class="join">&nbsp;还没有账号？那快来<a href="SignUp.html">注册</a>加入我们吧！</div>
+		    </div>
+		    <div class="actions mdui-row-xs-2">
+		      <div class="mdui-col">
+		        <a class="mdui-btn mdui-btn-block  mdui-color-theme mdui-ripple mdui-ripple" href="javascript:Login();">登录</a>
+		      </div>
+		      <div class="mdui-col">
+		      	
+		        <a class="mdui-btn mdui-btn-block  mdui-color-theme mdui-ripple mdui-ripple" href="../">取消</a>
+		      </div>
+		    </div>
+		</div>
+	</div>
+
+<script src="https://lib.baomitu.com/mdui/0.4.1/js/mdui.min.js"></script>
+	<script src="md5.js" type="text/javascript"></script>
+	<script src="//libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="../public/js/public.js"></script>
+	<script type="text/javascript">
+		var $$ = mdui.JQ;
+		$.post('../public/head.php',{null:null},function(data){$('.container').before(data)});
+		$.post('../public/foot.php',{null:null},function(data){$('body').append(data)});
+		function Login(){
+			var name = $$('input[name="name"]').val()
+				,pw =$$('input[name="pw"]').val()
+				,cookie = $$('input[name="cookie"]:checked').val();
+			if(name ==='' || pw ==='') {
+				dialog('请输入账号密码！')
+				return 0;
+			}
+			$$.ajax({
+				method: 'POST',
+				url: './submit.php',
+				data: {
+				  Login:'Login'
+				  ,name:name
+				  ,pw:hex_md5(pw)
+				  ,cookie:cookie
+				},
+				success: function (data) {
+					if(data =='I`m OK!'){
+						snackbar('欢迎回来，亲爱的'+name+'<br> 3秒后为你跳转到个人空间');
+						setTimeout("window.location.href='./'", 3000);
+					}else  dialog(data);
+				}
+			});
+		}
+	</script>
+</body>
+</html>

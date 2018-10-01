@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>个人中心--ACG58动漫社区</title>
+  <link rel="stylesheet" type="text/css" href="../public/css/public.css">
+	<link href="https://lib.baomitu.com/mdui/0.4.1/css/mdui.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../public/layui/css/layui.css"  media="all">
+	<style type="text/css">
+	    a{text-decoration: none; color: #000;}
+	    body{ background-color: #eee; }
+	    .content{ text-align:center; margin-top: 15px;background-color: #eee;z-index: 9999}
+	    .icon{ display: inline-block; margin: 0 auto;  }
+	    .user-icon{ margin: 5px; width: 100px; height: 100px; border-radius: 50%; background-color: #EBEBEB; box-shadow:0px 0px 0px 5px #FFF; background-image: url(images/logo.png); float: left;  }
+	    .user-name{ padding: 0 15px; font-size: 2rem; height: 105px; overflow:hidden; float: left; display:flex; display: -webkit-flex; align-items:center;/*指定垂直居中*/ }
+	    .user-info{ max-width: 400px; margin: 5px auto; font-size: 16px; font-weight: 500;  overflow:hidden; text-overflow: ellipsis; white-space: nowrap; opacity: .87; color: #333; border: dashed 1px #eee;}
+	    .user-info:hover{ overflow:hidden; text-overflow: clip; white-space: normal; z-index: 999; border: dashed 1px #ff4081; border-radius: 5px; }
+	    .user-nav{  margin-top: 15px; height: 42px; background-color: #fff; border-radius: 5px; }
+	    .user-nav > ul,ul>a{ padding: 0px; }
+	    a > li {display: inline-block; width: 19%; height: 42px; font-size: 1.5rem; line-height: 40px; align-items:center; }
+	    ul> a{ text-decoration: none; height: 42px; out-line: none; }
+	    a > li:hover,.active{background-color: rgba(255,40,81,.1);  border-bottom: 3px solid #ff4081; }
+	    .user{ width: 100%; position: relative; margin-top:35px}
+	    .user-title{position: absolute; top: -1rem; left: 1.5rem; display:inline-block; overflow:hidden;font-size: 1.1rem; color: #FFF; background-color: #0fb2fc; z-index: 999; border-radius: 3px;padding: 4px 8px}
+	    .user-content{width: 100%;background-color: hsla(0,0%,100%,.95); z-index: -1; border-radius: 5px; padding-top: 1rem;text-align: left}
+	    table{ margin: 5px 0; }
+	</style>
+</head>
+<body class="mdui-theme-primary-blue-grey">
+    <!-- 加载动画区域 -->
+    
+    <!-- 内容区域 -->
+    <div class="container content">
+        <!-- 头像显示区域 -->
+        <div class="icon">
+          <img  class="user-icon" src="../images/user/1.gif">
+          <div class="user-name">Name</div>
+        </div>
+        <div class="user-info">这个人很高冷啊，啥也没留下</div> 
+        <!-- nav导航区域 -->
+        <nav class="user-nav">
+          <ul>
+            <a onclick="onUserInfo('个人资料','info');"  href="javascript:void(0);">
+              <li>首页</li>
+            </a>
+            <a onclick="onUserInfo('文章','author');" href="javascript:void(0);">
+              <li>文章</li>
+            </a>
+            <a onclick="onUserInfo('收藏','fav');" href="javascript:void(0);">
+              <li>收藏</li>
+            </a>
+            <a onclick="onUserInfo('评论','comments');" href="javascript:void(0);">
+              <li>评论</li>
+            </a>
+          </ul>
+        </nav>
+        <!-- 个人内容区域 -->
+        <div class="user">
+          <div class="user-title">个人资料</div>
+          <div class="user-content"></div>
+        </div>
+
+      </div>
+      <div id="upTop">
+    <div class="circle">
+        <!--左半边圆-->
+        <div class="circle_left">
+            <div class="clip_left"></div>
+        </div>
+        <!--右半边圆-->
+        <div class="circle_right">
+            <div class="clip_right"></div>
+        </div>
+        <button class="center mdui-fab mdui-color-theme"><i class="mdui-icon material-icons">expand_less</i></button>
+    </div>
+</div>
+    <!-- 引入外部框架 -->
+    <script src="//libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../public/js/public.js"></script>
+    <script type="text/javascript">
+    $.post('../public/head.php',{null:null},function(data){$('.container').before(data)});
+    $.post('../public/foot.php',{null:null},function(data){$('body').append(data)});
+    var user=getQueryString('id');
+     $(document).ready(function(){
+        $.post('submit.php',{
+          userInfo:'user'
+          ,user:user
+        },function(data,status){
+          data = JSON.parse(data);
+          console.log(data);
+          $('.user-name').html(data.name);
+          $('.user-icon').attr("src",'../images/user/'+data.coer);
+          $('.mdui-typo-title').html(data.name+'的个人空间--ACG58社区');
+          document.title=data.name+'的个人空间 — ACG58社区'; 
+        });
+        onUserInfo('个人资料','info');
+      });
+    /*列表单击方法*/
+      function onUserInfo(title,cate){
+        var user=getQueryString('id');
+        $.post('submit.php',{ tableCate:cate,user:user},function(data,status){ $('.user-content').html(data); $('.user-title').html(title); });
+      }
+    </script>
+</body>
+</html>
