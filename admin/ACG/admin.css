@@ -1,0 +1,11 @@
+body{background-color: #fff}
+td>a>.layui-icon{display:inline-block;color:#87ceeb;font-size:2rem;transition:All .4s ease-in-out}
+td>a{margin-right:6px}
+td>a:last-child{margin-right:0}
+td>a>.layui-icon:hover{transform:rotate(360deg)}
+.checked{background-color:rgba(255,40,81,.7)}
+.typo{padding:.5rem 2rem;text-align:center}
+.typo>a,.typo>span{margin-right:.5rem;margin-bottom:.5rem;font-size:1.5rem}
+.typo>a{padding:2px;background:linear-gradient(0,#ff4081 2px,#ff4081 2px) no-repeat,linear-gradient(-90deg,#ff4081 2px,#ff4081 2px) no-repeat,linear-gradient(-180deg,#ff4081 2px,#ff4081 2px) no-repeat,linear-gradient(-270deg,#ff4081 2px,#ff4081 2px) no-repeat;background-position:left top,right top,right bottom,left bottom;background-size:0 1px,1px 0,0 1px,1px 0;color:#ff4081;transition:ease-in .3s}
+.typo>a:hover{background-size:100% 1px,1px 100%,100% 1px,1px 100%}
+.red{color:#ff4081!important}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>ACG58动漫社区</title>
+	<link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+   <link href="//lib.baomitu.com/mdui/0.4.1/css/mdui.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../public/css/public.css">
+    <link href="dist/summernote.css" rel="stylesheet" />
+</head>
+<body class="mdui-theme-primary-blue-grey">
+<div class="nav-appbar">
+  <div class="container">
+    <a href="javascript:history.go(-1)" class="mdui-typo-title">ACG58社区</a>
+    <div class="nav-right">
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu'}"><i class="mdui-icon material-icons">more_vert</i></a>
+        <ul class="mdui-menu" id='menu'>
+          <li class="mdui-menu-item"><a class="mdui-ripple submit">提交分享</a></li>
+          <li class="mdui-menu-item"><a href="javascript:history.go(-1)" class="mdui-ripple">取消分享</a></li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="container" style="padding-top: 52px">
+        <div class="from">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">标题,你分享的是什么</label>
+                    <input class="mdui-textfield-input" maxlength="25" name="title" pattern="^.*(?=.{4,}).*$" type="text" required/>
+                    <div class="mdui-textfield-error">标题不能小于4位</div>
+                </div>
+                <div class="mdui-row" style="height: 95px;"> 
+                    <div class="mdui-col-xs-4">
+                    <label class="mdui-textfield-label">选择分类:</label>
+                        <select name="cate" class="mdui-select" mdui-select></select>
+                    </div>
+                    <form id='form1' class="mdui-col-xs-4">
+                        <label class="mdui-textfield-label">求
+                        美美的封面哒:</label>
+                        <input type="button" class="mdui-btn mdui-ripple mdui-color-theme" value="上传图片" onclick="file.click()" class="btn_mouseout"/> 
+                        <input type="file" id="file" name="file" onchange="upload(this);" style="display:none"/>  
+                    </form>
+                    <div class="mdui-col-xs-4 avatar">
+                    </div>
+                </div>
+                <div class="input mdui-textfield">
+                    <label class="mdui-textfield-label">添加描述,让人对你的分享一幕了然</label>
+                    <div class="input summernote"></div>
+                </div>
+
+                <div class="mdui-col-xs-12 down" style="display: none;">
+                    <label class="mdui-textfield-label ">附加内容：下载</label>
+                    <div class="mdui-textfield  mdui-col-xs-6">
+                        <label class="mdui-textfield-label ">云盘下载地址</label>
+                        <input class="mdui-textfield-input" maxlength="99" name="link" type="text" />
+                    </div>
+                    <div class="mdui-textfield mdui-col-xs-3">
+                        <label class="mdui-textfield-label">附加内容：提取码</label>
+                        <input class="mdui-textfield-input" maxlength="14" name="link_code" type="text" />
+                    </div>
+                    <div class="mdui-textfield mdui-col-xs-3">
+                        <label class="mdui-textfield-label">附加内容：解压密码</label>
+                        <input class="mdui-textfield-input" maxlength="14" name="link_code2" type="text" />
+                    </div>
+                </div>
+                <div class="mdui-typo"><a class="downToggle" href="javascript:;" style="margin-bottom: 5px;"> <i class="mdui-icon material-icons">arrow_drop_down</i>添加云盘分享</a></div>
+                <div class="mdui-row-xs-2">
+                    <div class="mdui-col">
+                        <button class="mdui-btn mdui-btn-block submit mdui-color-theme mdui-ripple">提交分享</button>
+                    </div>
+                    <div class="mdui-col">
+                        <a href="javascript:history.go(-1)" class="mdui-btn mdui-btn-block  mdui-color-theme mdui-ripple">取消分享</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div id="upTop">
+    <div class="circle">
+        <!--左半边圆-->
+        <div class="circle_left">
+            <div class="clip_left"></div>
+        </div>
+        <!--右半边圆-->
+        <div class="circle_right">
+            <div class="clip_right"></div>
+        </div>
+        <button class="center mdui-fab mdui-color-theme"><i class="mdui-icon material-icons">expand_less</i></button>
+    </div>
+</div>
+	<script src="//libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="//apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="dist/summernote.js"></script>
+    <script src="dist/lang/summernote-zh-CN.js"></script>
+    <script src="../public/js/public.js"></script>
+	 <script type="text/javascript">
+        var arrow_drop = 0
+            ,avatar = 0;
+        $.ajaxSetup({  async : false  });
+        $.post("submit.php",{selectCate:'null'},function(data){$('select[name = cate]').html(data);});
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 350,
+                tabsize: 2,
+                lang: 'zh-CN'
+            });
+            $('.downToggle').click(function() {
+                $('.down').animate({ height:'toggle' });
+                arrow_drop = (arrow_drop === 'arrow_drop_up')?'arrow_drop_down':'arrow_drop_up';
+                $('.downToggle > i').html(arrow_drop);
+            });
+            $(".submit").click(function() {
+                var content = $('.summernote').summernote('code')
+                    ,title = $('input[name = title]').val();
+                if(title == ''){
+                    snackbar('请输入标题');
+                    return 0;
+                }
+                if(!avatar){
+                    snackbar('请上传封面');
+                    return 0;
+                }
+                $.post('submit.php',{
+                    new:'new'
+                    ,title:title
+                    ,coer:avatar
+                    ,content:content
+                    ,link:$('input[name = link]').val()
+                    ,link_code:$('input[name = link_code]').val()
+                    ,link_code2:$('input[name = link_code2]').val()
+                    ,cate:$('select[name = cate]').val()
+                },function(data){
+                    dialog(data);
+                });
+            });
+        });
+        /*阻止表单提交按钮的功能
+        document.querySelector('#submit').addEventListener('click',function(e){
+            e.preventDefault();
+        },false);*/
+    </script>
+   <script src="//lib.baomitu.com/mdui/0.4.1/js/mdui.min.js"></script>
+<script type="text/javascript">
+function upload(){  
+    var animateimg = $("#file").val(); //获取上传的图片名 带//  
+    var imgarr=animateimg.split('\\'); //分割  
+    var myimg=imgarr[imgarr.length-1]; //去掉 // 获取图片名  
+    var houzui = myimg.lastIndexOf('.'); //获取 . 出现的位置  
+    var ext = myimg.substring(houzui, myimg.length).toUpperCase();  //切割 . 获取文件后缀  
+      
+    var file = $('#file').get(0).files[0]; //获取上传的文件  
+    var fileSize = file.size;           //获取上传的文件大小  
+    var maxSize = 1048576;              //最大1MB  
+    if(ext !='.PNG' && ext !='.GIF' && ext !='.JPG' && ext !='.JPEG'){  
+        alert('文件类型错误,请上传图片类型');  
+        return false;  
+    }else if(parseInt(fileSize) >= parseInt(maxSize)){  
+        alert('上传的文件不能超过1MB');  
+        return false;  
+    }else{    
+        var data = new FormData($('#form1')[0]);  
+        //console.log(data);
+        $.ajax({    
+            url: "submit.php",   
+            type: 'POST',    
+            data: data,    
+            dataType: 'JSON',    
+            cache: false,    
+            processData: false,    
+            contentType: false    
+        }).done(function(data){
+            avatar = data.filename;
+            $('.avatar').html('<img src="'+data.filepath+'" alt="'+data.filename+'"  width="'+data.w/4+'" height="'+data.h/4+'">');
+            if(data.isSuccess) mdui.snackbar('上传成功'); else mdui.snackbar('上传失败');  
+        });    
+        return false;  
+       }    
+    }  
+</script>
+</body>
+</html>
